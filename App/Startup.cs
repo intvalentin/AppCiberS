@@ -65,8 +65,8 @@ namespace App
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                        "/", "{controller=UseriController}/{action=Index}"
-                       );
+                name: "Default",
+                pattern: "{controller=}/{action=Index}");
             });
         }
     }

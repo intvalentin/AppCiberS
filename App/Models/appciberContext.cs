@@ -18,8 +18,7 @@ namespace App.Models
         public virtual DbSet<Administrator> Administrator { get; set; }
         public virtual DbSet<Country> Country { get; set; }
         public virtual DbSet<Department> Department { get; set; }
-        public virtual DbSet<Dependents> Dependents { get; set; }
-        public virtual DbSet<Employe> Employe { get; set; }
+        public virtual DbSet<Employee> Employee { get; set; }
         public virtual DbSet<Job> Job { get; set; }
         public virtual DbSet<Locations> Locations { get; set; }
         public virtual DbSet<Region> Region { get; set; }
@@ -39,11 +38,13 @@ namespace App.Models
             {
                 entity.ToTable("administrator");
 
-                entity.HasIndex(e => e.UserEmail)
-                    .HasName("UQ__administ__B0FBA2120BA2F936")
+                entity.HasIndex(e => e.EmployeId)
+                    .HasName("UQ__administ__C0B77A57F4FECC36")
                     .IsUnique();
 
                 entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.EmployeId).HasColumnName("employe_id");
 
                 entity.Property(e => e.Password)
                     .IsRequired()
@@ -56,17 +57,10 @@ namespace App.Models
                     .HasMaxLength(60)
                     .IsUnicode(false);
 
-                entity.Property(e => e.UserEmail)
-                    .IsRequired()
-                    .HasColumnName("user_email")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.HasOne(d => d.UserEmailNavigation)
+                entity.HasOne(d => d.Employe)
                     .WithOne(p => p.Administrator)
-                    .HasPrincipalKey<Employe>(p => p.Email)
-                    .HasForeignKey<Administrator>(d => d.UserEmail)
-                    .HasConstraintName("FK__administr__user___45F365D3");
+                    .HasForeignKey<Administrator>(d => d.EmployeId)
+                    .HasConstraintName("FK__administr__emplo__45F365D3");
             });
 
             modelBuilder.Entity<Country>(entity =>
@@ -113,50 +107,12 @@ namespace App.Models
                     .HasConstraintName("FK__departmen__locat__35BCFE0A");
             });
 
-            modelBuilder.Entity<Dependents>(entity =>
+            modelBuilder.Entity<Employee>(entity =>
             {
-                entity.HasKey(e => e.DependentId)
-                    .HasName("PK__dependen__F25E28CE413702F5");
-
-                entity.ToTable("dependents");
-
-                entity.Property(e => e.DependentId).HasColumnName("dependent_id");
-
-                entity.Property(e => e.EmployeeId).HasColumnName("employee_id");
-
-                entity.Property(e => e.FirstName)
-                    .IsRequired()
-                    .HasColumnName("first_name")
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.LastName)
-                    .IsRequired()
-                    .HasColumnName("last_name")
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Relationship)
-                    .IsRequired()
-                    .HasColumnName("relationship")
-                    .HasMaxLength(25)
-                    .IsUnicode(false);
-
-                entity.HasOne(d => d.Employee)
-                    .WithMany(p => p.Dependents)
-                    .HasForeignKey(d => d.EmployeeId)
-                    .HasConstraintName("FK__dependent__emplo__4222D4EF");
-            });
-
-            modelBuilder.Entity<Employe>(entity =>
-            {
-                entity.HasKey(e => e.EmployeeId)
-                    .HasName("PK__employe__C52E0BA8A11E5E83");
-
-                entity.ToTable("employe");
+                entity.ToTable("employee");
 
                 entity.HasIndex(e => e.Email)
-                    .HasName("UQ__employe__AB6E6164EBDF715C")
+                    .HasName("UQ__employee__AB6E61649EC7114D")
                     .IsUnique();
 
                 entity.Property(e => e.EmployeeId).HasColumnName("employee_id");
@@ -198,20 +154,20 @@ namespace App.Models
                     .HasColumnType("decimal(8, 2)");
 
                 entity.HasOne(d => d.Department)
-                    .WithMany(p => p.Employe)
+                    .WithMany(p => p.Employee)
                     .HasForeignKey(d => d.DepartmentId)
                     .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("FK__employe__departm__3E52440B");
+                    .HasConstraintName("FK__employee__depart__3E52440B");
 
                 entity.HasOne(d => d.Job)
-                    .WithMany(p => p.Employe)
+                    .WithMany(p => p.Employee)
                     .HasForeignKey(d => d.JobId)
-                    .HasConstraintName("FK__employe__job_id__3D5E1FD2");
+                    .HasConstraintName("FK__employee__job_id__3D5E1FD2");
 
                 entity.HasOne(d => d.Manager)
                     .WithMany(p => p.InverseManager)
                     .HasForeignKey(d => d.ManagerId)
-                    .HasConstraintName("FK__employe__manager__3F466844");
+                    .HasConstraintName("FK__employee__manage__3F466844");
             });
 
             modelBuilder.Entity<Job>(entity =>
@@ -238,7 +194,7 @@ namespace App.Models
             modelBuilder.Entity<Locations>(entity =>
             {
                 entity.HasKey(e => e.LocationId)
-                    .HasName("PK__location__771831EABEEFD79C");
+                    .HasName("PK__location__771831EA5CA9E9EC");
 
                 entity.ToTable("locations");
 

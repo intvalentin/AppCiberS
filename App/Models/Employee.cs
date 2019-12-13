@@ -3,12 +3,11 @@ using System.Collections.Generic;
 
 namespace App.Models
 {
-    public partial class Employe
+    public partial class Employee
     {
-        public Employe()
+        public Employee()
         {
-            Dependents = new HashSet<Dependents>();
-            InverseManager = new HashSet<Employe>();
+            InverseManager = new HashSet<Employee>();
         }
 
         public int EmployeeId { get; set; }
@@ -24,9 +23,8 @@ namespace App.Models
 
         public virtual Department Department { get; set; }
         public virtual Job Job { get; set; }
-        public virtual Employe Manager { get; set; }
+        public virtual Employee Manager { get; set; }
         public virtual Administrator Administrator { get; set; }
-        public virtual ICollection<Dependents> Dependents { get; set; }
-        public virtual ICollection<Employe> InverseManager { get; set; }
+        public virtual ICollection<Employee> InverseManager { get; set; }
     }
 }

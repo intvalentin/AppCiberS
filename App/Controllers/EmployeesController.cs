@@ -9,23 +9,23 @@ using App.Models;
 
 namespace App.Controllers
 {
-    public class EmployesController : Controller
+    public class EmployeesController : Controller
     {
         private readonly appciberContext _context;
 
-        public EmployesController(appciberContext context)
+        public EmployeesController(appciberContext context)
         {
             _context = context;
         }
 
-        // GET: Employes
+        // GET: Employees
         public async Task<IActionResult> Index()
         {
-            var appciberContext = _context.Employe.Include(e => e.Department).Include(e => e.Job).Include(e => e.Manager);
+            var appciberContext = _context.Employee.Include(e => e.Department).Include(e => e.Job).Include(e => e.Manager);
             return View(await appciberContext.ToListAsync());
         }
 
-        // GET: Employes/Details/5
+        // GET: Employees/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,48 +33,48 @@ namespace App.Controllers
                 return NotFound();
             }
 
-            var employe = await _context.Employe
+            var employee = await _context.Employee
                 .Include(e => e.Department)
                 .Include(e => e.Job)
                 .Include(e => e.Manager)
                 .FirstOrDefaultAsync(m => m.EmployeeId == id);
-            if (employe == null)
+            if (employee == null)
             {
                 return NotFound();
             }
 
-            return View(employe);
+            return View(employee);
         }
 
-        // GET: Employes/Create
+        // GET: Employees/Create
         public IActionResult Create()
         {
             ViewData["DepartmentId"] = new SelectList(_context.Department, "DepartmentId", "DepartmentName");
             ViewData["JobId"] = new SelectList(_context.Job, "JobId", "JobTitle");
-            ViewData["ManagerId"] = new SelectList(_context.Employe, "EmployeeId", "Email");
+            ViewData["ManagerId"] = new SelectList(_context.Employee, "EmployeeId", "Email");
             return View();
         }
 
-        // POST: Employes/Create
+        // POST: Employees/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EmployeeId,FirstName,LastName,Email,PhoneNumber,HireDate,JobId,Salary,ManagerId,DepartmentId")] Employe employe)
+        public async Task<IActionResult> Create([Bind("EmployeeId,FirstName,LastName,Email,PhoneNumber,HireDate,JobId,Salary,ManagerId,DepartmentId")] Employee employee)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(employe);
+                _context.Add(employee);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DepartmentId"] = new SelectList(_context.Department, "DepartmentId", "DepartmentName", employe.DepartmentId);
-            ViewData["JobId"] = new SelectList(_context.Job, "JobId", "JobTitle", employe.JobId);
-            ViewData["ManagerId"] = new SelectList(_context.Employe, "EmployeeId", "Email", employe.ManagerId);
-            return View(employe);
+            ViewData["DepartmentId"] = new SelectList(_context.Department, "DepartmentId", "DepartmentName", employee.DepartmentId);
+            ViewData["JobId"] = new SelectList(_context.Job, "JobId", "JobTitle", employee.JobId);
+            ViewData["ManagerId"] = new SelectList(_context.Employee, "EmployeeId", "Email", employee.ManagerId);
+            return View(employee);
         }
 
-        // GET: Employes/Edit/5
+        // GET: Employees/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -82,25 +82,25 @@ namespace App.Controllers
                 return NotFound();
             }
 
-            var employe = await _context.Employe.FindAsync(id);
-            if (employe == null)
+            var employee = await _context.Employee.FindAsync(id);
+            if (employee == null)
             {
                 return NotFound();
             }
-            ViewData["DepartmentId"] = new SelectList(_context.Department, "DepartmentId", "DepartmentName", employe.DepartmentId);
-            ViewData["JobId"] = new SelectList(_context.Job, "JobId", "JobTitle", employe.JobId);
-            ViewData["ManagerId"] = new SelectList(_context.Employe, "EmployeeId", "Email", employe.ManagerId);
-            return View(employe);
+            ViewData["DepartmentId"] = new SelectList(_context.Department, "DepartmentId", "DepartmentName", employee.DepartmentId);
+            ViewData["JobId"] = new SelectList(_context.Job, "JobId", "JobTitle", employee.JobId);
+            ViewData["ManagerId"] = new SelectList(_context.Employee, "EmployeeId", "Email", employee.ManagerId);
+            return View(employee);
         }
 
-        // POST: Employes/Edit/5
+        // POST: Employees/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EmployeeId,FirstName,LastName,Email,PhoneNumber,HireDate,JobId,Salary,ManagerId,DepartmentId")] Employe employe)
+        public async Task<IActionResult> Edit(int id, [Bind("EmployeeId,FirstName,LastName,Email,PhoneNumber,HireDate,JobId,Salary,ManagerId,DepartmentId")] Employee employee)
         {
-            if (id != employe.EmployeeId)
+            if (id != employee.EmployeeId)
             {
                 return NotFound();
             }
@@ -109,12 +109,12 @@ namespace App.Controllers
             {
                 try
                 {
-                    _context.Update(employe);
+                    _context.Update(employee);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EmployeExists(employe.EmployeeId))
+                    if (!EmployeeExists(employee.EmployeeId))
                     {
                         return NotFound();
                     }
@@ -125,13 +125,13 @@ namespace App.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DepartmentId"] = new SelectList(_context.Department, "DepartmentId", "DepartmentName", employe.DepartmentId);
-            ViewData["JobId"] = new SelectList(_context.Job, "JobId", "JobTitle", employe.JobId);
-            ViewData["ManagerId"] = new SelectList(_context.Employe, "EmployeeId", "Email", employe.ManagerId);
-            return View(employe);
+            ViewData["DepartmentId"] = new SelectList(_context.Department, "DepartmentId", "DepartmentName", employee.DepartmentId);
+            ViewData["JobId"] = new SelectList(_context.Job, "JobId", "JobTitle", employee.JobId);
+            ViewData["ManagerId"] = new SelectList(_context.Employee, "EmployeeId", "Email", employee.ManagerId);
+            return View(employee);
         }
 
-        // GET: Employes/Delete/5
+        // GET: Employees/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -139,33 +139,33 @@ namespace App.Controllers
                 return NotFound();
             }
 
-            var employe = await _context.Employe
+            var employee = await _context.Employee
                 .Include(e => e.Department)
                 .Include(e => e.Job)
                 .Include(e => e.Manager)
                 .FirstOrDefaultAsync(m => m.EmployeeId == id);
-            if (employe == null)
+            if (employee == null)
             {
                 return NotFound();
             }
 
-            return View(employe);
+            return View(employee);
         }
 
-        // POST: Employes/Delete/5
+        // POST: Employees/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var employe = await _context.Employe.FindAsync(id);
-            _context.Employe.Remove(employe);
+            var employee = await _context.Employee.FindAsync(id);
+            _context.Employee.Remove(employee);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EmployeExists(int id)
+        private bool EmployeeExists(int id)
         {
-            return _context.Employe.Any(e => e.EmployeeId == id);
+            return _context.Employee.Any(e => e.EmployeeId == id);
         }
     }
 }

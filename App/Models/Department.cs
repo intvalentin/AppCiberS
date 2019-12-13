@@ -7,7 +7,7 @@ namespace App.Models
     {
         public Department()
         {
-            Employe = new HashSet<Employe>();
+            Employee = new HashSet<Employee>();
         }
 
         public int DepartmentId { get; set; }
@@ -15,6 +15,6 @@ namespace App.Models
         public int? LocationId { get; set; }
 
         public virtual Locations Location { get; set; }
-        public virtual ICollection<Employe> Employe { get; set; }
+        public virtual ICollection<Employee> Employee { get; set; }
     }
 }

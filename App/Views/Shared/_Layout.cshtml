@@ -10,6 +10,7 @@
     
         <script type="text/javascript" src="~/js/jquery-3.3.1.min.js"></script>
         <link type="text/css" href="~/materialize/css/materialize.min.css" rel="stylesheet">
+        <link  href="~/css/icons.css" rel="stylesheet" type="text/css">
         @*<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">*@
         
         @RenderSection("Styles", required: false)
@@ -18,7 +19,28 @@
 
 </head>
 <body >
-    
+    <header>
+
+        <!-- Dropdown Structure -->
+        <ul id="dropdown1" class="dropdown-content">
+            <li><a href="#!">one</a></li>
+            <li><a href="#!">two</a></li>
+            <li class="divider"></li>
+            <li><a href="#!">three</a></li>
+        </ul>
+        <nav>
+            <div class="nav-wrapper">
+                <a href="#!" class="brand-logo">Logo</a>
+                <ul class="right hide-on-med-and-down">
+                    <li><a href="sass.html">Sass</a></li>
+                    <li><a href="badges.html">Components</a></li>
+                    <!-- Dropdown Trigger -->
+                    <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Dropdown<i class="material-icons right">arrow_drop_down</i></a></li>
+                </ul>
+            </div>
+        </nav>
+
+    </header>
    
 
     
@@ -33,6 +55,7 @@
   
         
         <script type="text/javascript" src="~/materialize/js/materialize.min.js"></script>
+        <script type="text/javascript" src="~/js/init.js"></script>
       
         
     </footer>

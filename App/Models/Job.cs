@@ -7,7 +7,7 @@ namespace App.Models
     {
         public Job()
         {
-            Employe = new HashSet<Employe>();
+            Employee = new HashSet<Employee>();
         }
 
         public int JobId { get; set; }
@@ -15,6 +15,6 @@ namespace App.Models
         public decimal? MinSalary { get; set; }
         public decimal? MaxSalary { get; set; }
 
-        public virtual ICollection<Employe> Employe { get; set; }
+        public virtual ICollection<Employee> Employee { get; set; }
     }
 }

@@ -1,8 +1,47 @@
-﻿
+﻿@model App.Models.Employee;
 @{
     ViewData["Title"] = "View";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>View</h1>
+<div style="height: 70px;"></div>
+<div class=" z-depth-1 center-align container topbar theme-text" style="width:400px;"> <p>Login</p></div>
+<div style="height: 10px;"></div>
+<div class='container reg z-depth-1' style="width:400px;">
+
+    <div class="row">
+        <form class="formValidate col s12" method="POST" asp-action="Login">
+
+            <div class="row loginf" style="">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">verified_user</i>
+                    <input asp-for="Email" id="email" type="email" class="" value="" required autofocus>
+                    <label for="email" class="theme-text">Email</label>
+                </div>
+
+            </div>
+            <div class="row" style="">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">verified_user</i>
+                    <input  class="" required>
+                    <label for="password" class="theme-text">Password</label>
+                </div>
+
+            </div>
+            <a asp-action="ResetPassword" asp-controller="Login">Reset password</a>
+            <div class="row center-align">
+                <button class="btn waves-effect waves-light center-align" type="submit">
+                    Login
+                    <i class="material-icons right">send</i>
+                </button>
+
+            </div>
+            <div style="height:8px;"></div>
+        </form>
+    </div>
+</div>
+
+@*@section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }*@
 

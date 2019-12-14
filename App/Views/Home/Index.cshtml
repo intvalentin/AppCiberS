@@ -1,4 +1,4 @@
-﻿@model App.Models.Employee;
+﻿@model App.Models.Login;
 @{
     ViewData["Title"] = "View";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -23,7 +23,7 @@
             <div class="row" style="">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">verified_user</i>
-                    <input  class="" required>
+                    <input asp-for="Password" type="password" class="" required>
                     <label for="password" class="theme-text">Password</label>
                 </div>
 

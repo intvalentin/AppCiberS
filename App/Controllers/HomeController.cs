@@ -26,7 +26,7 @@ namespace App.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Login([FromBody] Login model)
+        public async Task<IActionResult> Login([FromForm] Login model)
         {
             string email = null, password = null;
 
@@ -52,7 +52,7 @@ namespace App.Controllers
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
                 };
 
-                var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("SecureKey"));
+                var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("this is my custom Secret key for authnetication"));
 
                 var token = new JwtSecurityToken(
                     issuer: "http://dotnetdetail.net",

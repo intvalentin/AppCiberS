@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using App.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.IdentityModel.Logging;
 
 namespace App
 {
@@ -54,6 +55,7 @@ namespace App
             if (Configuration.GetValue<bool>("EnableDeveloperException"))
             {
                 app.UseDeveloperExceptionPage();
+                IdentityModelEventSource.ShowPII = true;
             }
 
             app.UseRouting();

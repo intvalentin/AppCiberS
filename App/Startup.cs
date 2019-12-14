@@ -61,7 +61,7 @@ namespace App
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseSession();
-           
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

@@ -60,10 +60,11 @@ namespace App.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EmployeeId,FirstName,LastName,Email,PhoneNumber,HireDate,JobId,Salary,ManagerId,DepartmentId")] Employee employee)
+        public async Task<IActionResult> Create([Bind("EmployeeId,FirstName,LastName,Email,PhoneNumber,JobId,Salary,ManagerId,DepartmentId")] Employee employee)
         {
             if (ModelState.IsValid)
             {
+                employee.HireDate = DateTime.Now;
                 _context.Add(employee);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

@@ -18,7 +18,7 @@
     @RenderSection("Css", required: false)
 
 </head>
-<body >
+<body>
     <header>
 
         <!-- Dropdown Structure -->
@@ -41,27 +41,21 @@
         </nav>
 
     </header>
-   
 
-    
+
+
 
     <main class="main container body-content">
-        
+
         @RenderBody()
-        
+
     </main>
     <footer class="page-footer">
-      
-  
-        
-        <script type="text/javascript" src="~/materialize/js/materialize.min.js"></script>
-        <script type="text/javascript" src="~/js/init.js"></script>
-      
-        
     </footer>
-   
 
 
+    <script type="text/javascript" src="~/materialize/js/materialize.min.js"></script>
+    <script type="text/javascript" src="~/js/init.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

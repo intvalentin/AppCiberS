@@ -6,9 +6,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using App.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace App.Controllers
 {
+
+    
+    [Authorize]
+   
     public class EmployeesController : Controller
     {
         private readonly appciberContext _context;
@@ -17,7 +23,8 @@ namespace App.Controllers
         {
             _context = context;
         }
-
+        
+        
         // GET: Employees
         public async Task<IActionResult> Index()
         {
@@ -45,7 +52,7 @@ namespace App.Controllers
 
             return View(employee);
         }
-
+        [Authorize]
         // GET: Employees/Create
         public IActionResult Create()
         {

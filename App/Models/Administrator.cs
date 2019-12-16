@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace App.Models
+﻿namespace App.Models
 {
-    public partial class Administrator
+    public partial class Administrator 
     {
         public int Id { get; set; }
         public int EmployeId { get; set; }

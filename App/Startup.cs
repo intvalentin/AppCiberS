@@ -57,6 +57,7 @@ namespace App
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(options =>
             {
+                
                 options.Events = new CookieAuthenticationEvents()
                 {
                     OnRedirectToLogin = async (context) =>
@@ -127,8 +128,7 @@ namespace App
               .AllowAnyOrigin()
               .AllowAnyMethod()
               .AllowAnyHeader());
-            app.UseCookiePolicy(
-            );
+            app.UseCookiePolicy();
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using App.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-
+using Dapper;
 namespace App.Controllers
 {
 
@@ -30,6 +30,38 @@ namespace App.Controllers
         {
             var appciberContext = _context.Employee.Include(e => e.Department).Include(e => e.Job).Include(e => e.Manager);
             return View(await appciberContext.ToListAsync());
+        }
+        public async Task<IActionResult> SearchEmployee(string name)
+        {
+            //var appciberContext = _context.Employee.Include(e => e.Department).Include(e => e.Job).Include(e => e.Manager).Where(e => e.FirstName == name);
+            //var appciberContext = _context.Employee.FromSqlRaw("SELECT * FROM employee WHERE ID = "+name).First();
+            var conn = _context.Database.GetDbConnection();
+            var query = "SELECT * FROM employee WHERE first_name = '" + name + "'";
+            IEnumerable<Employee> appciberContext;
+            try
+            {
+                await conn.OpenAsync();
+                appciberContext = await conn.QueryAsync<Employee>(query);
+                
+            }
+
+            finally
+            {
+                conn.Close();
+
+            }
+
+
+
+            var employee = appciberContext.First();
+            if (employee == null)
+            {
+                return NotFound();
+            }
+            ViewData["DepartmentId"] = new SelectList(_context.Department, "DepartmentId", "DepartmentName", employee.DepartmentId);
+            ViewData["JobId"] = new SelectList(_context.Job, "JobId", "JobTitle", employee.JobId);
+            ViewData["ManagerId"] = new SelectList(_context.Employee, "EmployeeId", "Email", employee.ManagerId);
+            return View("~/Views/Employees/Edit.cshtml",employee);
         }
 
         // GET: Employees/Details/5
